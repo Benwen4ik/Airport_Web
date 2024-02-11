@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--<link th:href="@{header_style.css}"  rel="stylesheet">-->
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: powderblue;
+            /*background-image: url("../img/white-needle.png");*/
+        }
+        #block-body {
+            width: 1035px;
+            margin: 5px auto;
+            height: auto;
+        }
+        header {
+            width: 1035px;
+            height: 80px;
+            background-color: black;
+        }
+        #block-content {
+            width: 1035px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 500px;
+        }
+        .logo {
+            width: 200px;
+            float: left;
+            height: 80px;
+        }
+        .logo a {
+            display: block;
+            margin-left: 15px;
+            margin-top: 10px;
+            font-family: "Exo2-Bold", sans-serif;
+            font-size: 28px;
+            color:  #b2aeb2;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .use {
+            color: #aa064b;
+
+        }
+        .web {
+            color: #429595;
+        }
+        .logo p {
+            margin-left: 20px;
+            margin-top: 2px;
+            margin-bottom: 5px;
+            font-family:  "Exo2-Medium", sans-serif;
+            font-size: 13px;
+            color: white;
+        }
+        .top-menu {
+            width: 685px;
+            height: 80px;
+            float: left;
+        }
+        .top-menu ul li {
+            list-style: none;
+            float: left;
+            text-align: center;
+        }
+        .top-menu ul li a {
+            display: block;
+            width: 171px;
+            text-decoration: none;
+            font-family:  "Exo2-Medium", sans-serif;
+            font-size: 17px;
+            color: white;
+            height: 55px;
+            padding-top: 25px;
+            cursor: pointer;
+        }
+        .top-menu ul li a:hover {
+            transition: all 0.5s ease;
+            -webkit-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            -ms-transition:all 0.5s ease;
+            -moz-transition:all 0.5s ease;
+            background: #00ADE4;
+        }
+        .block-top-auth {
+            width: 100px;
+            float: left;
+            margin-left: 40px;
+            height: 80px;
+        }
+        .block-top-auth p {
+            margin-top: 12px;
+            text-align: center;
+            margin-bottom: 8px;
+
+        }
+        .block-top-auth a {
+            text-decoration: none;
+            color: white;
+            font-family:  "Exo2-Medium", sans-serif;
+            font-size: 15px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .block-top-auth a:hover {
+            transition: all 0.5s ease;
+            -webkit-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            -ms-transition:all 0.5s ease;
+            -moz-transition:all 0.5s ease;
+            color: #00ADE4;
+        }
+
+
+
+        body#block-content {
+            margin: 0;
+            font-family: Arial, serif;
+        }
+        tr:nth-child(odd) td:first-child:before {
+            background-color: #eee;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -5000px;
+            width: 10000px;
+            height: 100%;
+            z-index: -10;
+        }
+        .airport-table {
+            overflow: hidden;
+            width: 100%;
+
+        }
+        tr:hover {
+            background-color: #ffa;
+        }
+        td, th {
+            position: relative;
+            font-size: 14px;
+            line-height: 30px;
+        }
+        td:hover::after,
+        th:hover::after {
+            content: "";
+            position: absolute;
+            background-color: #ffa;
+            left: 0;
+            top: -5000px;
+            height: 10000px;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .th-inner {
+            position: fixed;
+            top: 36px;
+            line-height: 30px;
+            text-align: left;
+            width: 100%;
+            background-color: white;
+            z-index: 1;
+        }
+        .hidden-header .th-inner {
+            position: static;
+            overflow-y: hidden;
+            white-space: nowrap;
+        }
+        .airport-table img {
+            margin-right: 10px;
+            width: 70px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 1030px) {
+            .note {
+                display: none;
+            }
+        }
+        @media (max-width: 940px) {
+            .airline-name {
+                display: none;
+            }
+        }
+        @media (max-width: 880px) {
+            .aircraft {
+                display: none;
+            }
+        }
+        @media (max-width: 720px) {
+            .airport {
+                display: none;
+            }
+        }
+        @media (max-width: 690px) {
+            .airline {
+                display: none;
+            }
+        }
+        #popup,
+        #popup2,
+        #popup3,
+        #popup4,
+        #popup5 {
+            position: absolute;
+            visibility: hidden;
+            opacity: 0;
+            margin-top: -200px;
+        }
+        #popup:target,
+        #popup2:target,
+        #popup3:target,
+        #popup4:target,
+        #popup5:target {
+            visibility: visible;
+            opacity: 1;
+            background-color: rgba(0,0,0, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            z-index: 99999999999;
+            -webkit-transition: all 1s;
+            -moz-transition: all 1s;
+            transition: all 1s;
+        }
+        a.href {
+            color: #000;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .popup-container {
+            position: relative;
+            margin: 7% auto;
+            padding: 30px 50px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 3px;
+            width: 370px;
+            height: 210px;
+        }
+        .popup-container img {
+            margin: 8px 0;
+        }
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: red;
+            text-decoration: none;
+        }
+        .height-fix {
+            height: 36px;
+            z-index: -1;
+        }
+        .filter-label[for="out"],
+        #out {
+            top: 25px;
+        }
+        .filter-label {
+            /*width: 100%;*/
+            /*position: fixed;*/
+            /*background-color: white;*/
+            /*z-index: 1;*/
+            /*top: 0;*/
+            /*height: 20px;*/
+            /*display: block;*/
+            /*margin-left: auto;*/
+            /*margin-right: auto;*/
+        }
+        .filter {
+            /*position: fixed;*/
+            /*top: 0;*/
+            /*z-index: 1;*/
+            /*left: 70px;*/
+        }
+
+        .airport-table .in ,
+        .airport-table .out {
+            display: none;
+        }
+        .filter#in:checked ~ .airport-table .in,
+        .filter#out:checked ~ .airport-table .out {
+            display: table-row
+        }
+    </style>
+</head>
+<body>
+<div id="block-body">
+    <header>
+
+        <!--     разметка для логотипа-->
+
+        <div class="logo">
+            <a href="/home">
+                <span class="use">AIR</span>-<span class="web">PORT</span>.by
+            </a>
+            <!--            <p>Разработка- это просто</p>-->
+        </div>
+
+        <!--     разметка для нашего меню-->
+
+        <div class="top-menu">
+            <ul>
+                <li><a class="clickMenu" th:href="@{/flight/search}">Поиск рейса</a></li>
+                <li><a th:href="@{/flight?sort=2}">Табло рейсов</a></li>
+                <li><a th:href="@{/booking}">Бронирование</a></li>
+                <li><a th:href="@{/info}">Об аэропорте</a></li>
+            </ul>
+        </div>
+
+        <!--     блок с авторизацией-->
+        <div class="block-top-auth">
+            <div sec:authorize="!isAuthenticated()" >
+                <p><a  th:href="@{/user/login}">Вход</a></p>
+                <p><a th:href="@{/user/registration}">Регистрация</a></p>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <p><a th:href="@{/user/login}">Мой аккаунт</a></p>
+                <p><a th:href="@{/user/login}">Выход</a></p>
+            </div>
+        </div>
+
+
+    </header>
+
+</div>
+
+<div id="block-content">
+    <div class="container" >
+        <div class="height-fix" >
+<!--         <button th:action="@{/flight/new}" >Добавить рейс</button>-->
+            <form th:action="@{/flight/new}" sec:authorize="isAuthenticated()">
+                <input type="submit" value="Добавить рейс"/>
+            </form>
+            <div class="aircraft">
+                <br>
+                <label for="sort">Сортировать по</label>
+                <select id="sort" name="sort" onchange="if (this.value) window.location.href = this.value" >
+                    <option value="" >---</option>
+                    <option  value="/flight?sort=1">номеру рейса</option>
+                    <option  value="/flight?sort=2">городу отправки</option>
+                    <option  value="/flight?sort=3">времени</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <label class="filter-label" for="in">Прилет:</label>
+        <input type="checkbox" class="filter" id="in" checked>
+        <label class="filter-label" for="out">Вылет:</label>
+        <input type="checkbox" class="filter" id="out" checked>
+        <table class="airport-table" cellspacing="0" >
+            <thead class="airport-table__head" id="table-head">
+<!--            <tr>-->
+<!--                <th>-->
+<!--                    <div class="th-inner">Тип рейса</div>-->
+<!--                </th>-->
+<!--                <th class="airline">-->
+<!--                    <div class="th-inner">Авиакомпания</div>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <div class="th-inner">Номер рейса</div>-->
+<!--                </th>-->
+<!--                <th class="aircraft">-->
+<!--                    <div class="th-inner">Тип воздушного судна</div>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <div class="th-inner">Место назначения</div>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <div class="th-inner">Время по расписанию</div>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <div class="th-inner">Статус рейса</div>-->
+<!--                </th>-->
+<!--                <th class="note">-->
+<!--                    <div class="th-inner">Примечание</div>-->
+<!--                </th>-->
+<!--            </tr>-->
+            <tr class="hidden-header">
+                <th>
+                    <div class="th-inner">Тип рейса</div>
+                </th>
+                <th class="airline">
+                    <div class="th-inner">Авиакомпания</div>
+                </th>
+                <th>
+                    <div class="th-inner">Номер рейса</div>
+                </th>
+<!--                <th class="aircraft">-->
+<!--                    <div class="th-inner">Тип воздушного судна</div>-->
+<!--                </th>-->
+                <th>
+                    <div class="th-inner">Откуда</div>
+                </th>
+                <th>
+                    <div class="th-inner">Куда</div>
+                </th>
+                <th>
+                    <div class="th-inner">Время по расписанию</div>
+                </th>
+                <th>
+                    <div class="th-inner">Статус рейса</div>
+                </th>
+                <th sec:authorize="isAuthenticated()">
+                    <div class="th-inner">Бронирование</div>
+                </th>
+                <th sec:authorize="isAuthenticated()">
+                    <div class="th-inner">Изменение</div>
+                </th>
+                <th sec:authorize="isAuthenticated()">
+                    <div class="th-inner">Удаление</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="airport-table__body" th:each="flight : ${flights}">
+            <tr th:class="${flight.getType()}" th:with="idf=${flight.getId_f()}">
+                <td><div th:switch="${flight.getType()}">
+                    <a th:case="in" href="#popup" class="href" th:text="Прилет"></a>
+                    <a th:case="out" href="#popup" class="href" th:text="Вылет"></a>
+                </div> </td>
+
+<!--                    <a href="#popup" class="href" th:text="if (${flight.getType()}=='in') 'Прилет' else 'Вылет'"></a></td>-->
+                <td class="airline" th:each="airline : ${airlinesdao.showById(flight.getId_f())}">
+                    <a   href="#popup" class="href" th:text="${airline.getName()}"><span class="airline-name">Аэрофлот</span></a>
+<!--                    <a th:if="${airline.getName() == '' }"  href="#popup" class="href" >-&#45;&#45;</a>-->
+                </td>
+                <td><a  href="#popup" class="href" th:text="${flight.getNumber()}"></a></td>
+<!--                <td class="aircraft"><a href="#popup" class="href" th:text="${}">А-330-300</a></td>-->
+                <td><a href="#popup" class="href" th:text="${flight.getFromcity()}"></a></td>
+                <td><a href="#popup" class="href" th:text="${flight.getTocity()}"></a></td>
+                <td><a href="#popup" class="href" th:text="${flight.getTime() + ' ' + flight.getDate()}"></a></td>
+                <td><a href="#popup" class="href" th:text="${flight.getStatus()}"></a></td>
+                <td sec:authorize="isAuthenticated()">
+                    <!--                    <input type="submit" value="Изменить" th:href="@{/flight/{id}/edit (id=${flight.getId_f()}) }"/>-->
+<!--                    <a th:href="@{/ticket/{id}(id=${flight.getId_f()}) }" > Забронировать</a>-->
+                    <form th:method="post" th:action="@{/booking}">
+                        <input type="submit" name="number" th:value="${flight.getNumber()}"/>
+                    </form>
+                </td>
+                <td sec:authorize="isAuthenticated()">
+<!--                    <input type="submit" value="Изменить" th:href="@{/flight/{id}/edit (id=${flight.getId_f()}) }"/>-->
+                    <a th:href="@{/flight/{id}/edit (id=${flight.getId_f()}) }" > Изменить</a>
+                </td>
+                <td sec:authorize="isAuthenticated()">
+                    <form th:method="DELETE" th:action="@{/flight/delete/{id} (id=${flight.getId_f()})}">
+                        <input type="submit" value="Удалить"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="popups" >
+        <div class="popup" id="popup" th:each="flight : ${flights}">
+            <div class="popup-container">
+                <a href="#" class="popup-close">X</a>
+                <div>Рейс <span th:text="${flight.getNumber()}"></span> </div>
+                <div>Тип рейса: <span th:text="${flight.getType()}"></span></div>
+                <div>Авиакомпания: Аэрофлот</div>
+                <div>Тип воздушного судна: А-330-300</div>
+                <div>Место отправления: <span th:text="${flight.getFromcity()}"></span></div>
+                <div>Место назначения: <span th:text="${flight.getTocity()}"></span></div>
+                <div>Время по расписанию: <span th:text="${flight.getTime()}"></span></div>
+                <div>Дата по расписанию: <span th:text="${flight.getDate()}"></span></div>
+                <div>Статус рейса: <span th:text="${flight.getStatus()}"></span></div>
+                <div>Цена рейса: <span th:text="${flight.getCost()}"></span></div>
+                <div>Номер терминала: <span th:text="${flight.getHall()}"></span></div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

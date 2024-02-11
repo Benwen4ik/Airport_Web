@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="CodePel">
+  <title> Search flight </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: powderblue;
+      /*background-image: url("../img/white-needle.png");*/
+    }
+    #block-body {
+      width: 1035px;
+      margin: 5px auto;
+      height: auto;
+    }
+    header {
+      width: 1035px;
+      height: 80px;
+      background-color: black;
+    }
+    #block-content {
+      width: 1035px;
+      height: auto;
+      min-height: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .logo {
+      width: 200px;
+      float: left;
+      height: 80px;
+    }
+    .logo a {
+      display: block;
+      margin-left: 15px;
+      margin-top: 10px;
+      font-family: "Exo2-Bold", sans-serif;
+      font-size: 28px;
+      color:  #b2aeb2;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .use {
+      color: #aa064b;
+
+    }
+    .web {
+      color: #429595;
+    }
+    .logo p {
+      margin-left: 20px;
+      margin-top: 2px;
+      margin-bottom: 5px;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 13px;
+      color: white;
+    }
+    .top-menu {
+      width: 685px;
+      height: 80px;
+      float: left;
+    }
+    .top-menu ul li {
+      list-style: none;
+      float: left;
+      text-align: center;
+    }
+    .top-menu ul li a {
+      display: block;
+      width: 171px;
+      text-decoration: none;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 17px;
+      color: white;
+      height: 55px;
+      padding-top: 25px;
+      cursor: pointer;
+    }
+    .top-menu ul li a:hover {
+      transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -ms-transition:all 0.5s ease;
+      -moz-transition:all 0.5s ease;
+      background: #00ADE4;
+    }
+    .block-top-auth {
+      width: 100px;
+      float: left;
+      margin-left: 40px;
+      height: 80px;
+    }
+    .block-top-auth p {
+      margin-top: 12px;
+      text-align: center;
+      margin-bottom: 8px;
+
+    }
+    .block-top-auth a {
+      text-decoration: none;
+      color: white;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 15px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .block-top-auth a:hover {
+      transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -ms-transition:all 0.5s ease;
+      -moz-transition:all 0.5s ease;
+      color: #00ADE4;
+    }
+
+
+
+
+
+    div, h2, h3, h6, form, label {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .clear {
+      clear: both;
+    }
+
+    .booking-form-w3layouts {
+      box-sizing: border-box;
+      padding: 3em;
+      background: rgba(0, 0, 0, 0.78);
+      width: 65%;
+      margin: 0 auto;
+    }
+
+    h2.sub-heading-agileits,
+    h3.sub-heading-agileits {
+      display: inline-block;
+      text-align: left;
+      font-size: 24px;
+      color: #fff;
+      text-transform: capitalize;
+      margin-bottom: 0.4em;
+      padding: 0px 25px 10px 0px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      border-bottom: 2px solid #0091cd;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .radio-section {
+      text-align: left;
+      margin: 0.7em 0;
+    }
+
+    .radio-section h6 {
+      display: inline;
+      margin-top: 10px;
+      color: #0091cd;
+      font-size: 19px;
+      text-transform: capitalize;
+      margin-bottom: 0.7em;
+      font-weight: 400;
+      letter-spacing: 2px;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .radio-section ul {
+      display: inline;
+    }
+
+    .radio-buttons-w3-agileits li input[type="radio"] {
+      cursor: pointer;
+    }
+
+    .radio-buttons-w3-agileits li label {
+      color: #fff;
+      font-size: 13.5px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .booking-form-w3layouts input[type="text"],
+    .booking-form-w3layouts input[type="email"],
+    .booking-form-w3layouts textarea,
+    select.form-control,
+    input#datepicker {
+      width: 100%;
+      font-weight: 300;
+      color: #fff;
+      font-size: 14px;
+      letter-spacing: 1.2px;
+      padding: 10px;
+      outline: none;
+      background: rgba(255, 255, 255, 0);
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.27);
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .booking-form-w3layouts textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .field-agileinfo-spc {
+      margin-bottom: 1em;
+    }
+
+    .form-w3-agile-text {
+      width: 100%;
+    }
+
+    select.form-control option {
+      background: #000;
+    }
+
+    .booking-form-w3layouts input[type="submit"],
+    .booking-form-w3layouts input[type="reset"] {
+      text-transform: capitalize;
+      background: #0091cd;
+      color: #fff;
+      padding: 0.5em 4em;
+      border: none;
+      font-weight: 500;
+      font-size: 1.2em;
+      margin-top: 1em;
+      float: left;
+      outline: none;
+      letter-spacing: 1px;
+      transition: 0.5s all;
+    }
+    .booking-form-w3layouts input[type="submit"] {
+      margin-right: 1.5em;
+      background: #d2741c;
+    }
+
+    .booking-form-w3layouts input[type="submit"]:hover {
+      background: #0091cd;
+      color: #fff;
+    }
+
+    .booking-form-w3layouts input[type="reset"]:hover {
+      background: #d2741c;
+      color: #fff;
+    }
+
+    .booking-form-w3layouts ::-webkit-input-placeholder {
+      color: #fff;
+    }
+
+    .booking-form-w3layouts :-moz-placeholder {
+      color: #fff;
+    }
+
+    .booking-form-w3layouts ::-moz-placeholder {
+      color: #fff;
+    }
+
+    .booking-form-w3layouts :-ms-input-placeholder {
+      color: #fff;
+    }
+
+    .booking-form-w3layouts label {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.83);
+      letter-spacing: 2px;
+      font-weight: 400;
+      position: relative;
+      margin-bottom: 5px;
+      display: inline-block;
+      text-transform: capitalize;
+    }
+
+    ul.radio-buttons-w3-agileits li {
+      display: inline-block;
+      margin: 0em 2em;
+    }
+
+    @media (max-width: 1440px) {
+      .booking-form-w3layouts {
+        width: 73%;
+      }
+    }
+
+    @media (max-width: 1366px) {
+      .booking-form-w3layouts {
+        width: 75%;
+      }
+    }
+
+    @media (max-width: 1280px) {
+      .booking-form-w3layouts {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .booking-form-w3layouts {
+        width: 83%;
+        padding: 2em 2.2em;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      h2.sub-heading-agileits,
+      h3.sub-heading-agileits {
+        font-size: 22px;
+        padding: 0px 20px 7px 0px;
+      }
+      .field-agileinfo-spc {
+        margin-bottom: 0.8em;
+      }
+      .booking-form-w3layouts input[type="submit"],
+      .booking-form-w3layouts input[type="reset"] {
+        padding: 0.5em 3em;
+        font-size: 1.1em;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h2.sub-heading-agileits,
+      h3.sub-heading-agileits {
+        font-size: 21px;
+        padding: 0px 15px 7px 0px;
+      }
+      .radio-section h6 {
+        font-size: 17px;
+        letter-spacing: 1.5px;
+      }
+      ul.radio-buttons-w3-agileits li {
+        margin: 0em 1em;
+      }
+    }
+
+    @media (max-width: 667px) {
+      h2.sub-heading-agileits,
+      h3.sub-heading-agileits {
+        font-size: 19px;
+        letter-spacing: 1.5px;
+      }
+      .booking-form-w3layouts {
+        width: 86%;
+        padding: 2em 2em;
+      }
+      .booking-form-w3layouts input[type="text"],
+      .booking-form-w3layouts input[type="email"],
+      .booking-form-w3layouts textarea,
+      select.form-control,
+      input#datepicker {
+        padding: 8px 10px;
+      }
+      .field-agileinfo-spc {
+        margin-bottom: 0.9em;
+      }
+      h2.sub-heading-agileits,
+      h3.sub-heading-agileits {
+        margin-bottom: 0.6em;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .booking-form-w3layouts input[type="submit"] {
+        margin-right: 0.7em;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .booking-form-w3layouts {
+        width: 90%;
+      }
+      .booking-form-w3layouts input[type="submit"],
+      .booking-form-w3layouts input[type="reset"] {
+        padding: 0.5em 2em;
+      }
+    }
+
+    @media (min-width: 481px) {
+      .main-flex-w3ls-sectns {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+      }
+      .form-w3-agile-text1,
+      .form-w3-agile-text2 {
+        flex-basis: 48.5%;
+        -webkit-flex-basis: 48.5%;
+      }
+    }
+
+    @media (min-width: 737px) {
+      .triple-wthree {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+      }
+      .form-w3-agile-text11,
+      .form-w3-agile-text22,
+      .form-w3-agile-text33 {
+        flex-basis: 32%;
+        -webkit-flex-basis: 32%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      ul.radio-buttons-w3-agileits li {
+        margin: 0em 0.5em;
+      }
+      .radio-section {
+        margin: 1.3em 0 .7em;
+      }
+      .booking-form-w3layouts {
+        width: 85%;
+      }
+      ul.radio-buttons-w3-agileits li {
+        margin: 1em 0em 0em 0.2em;
+        display: block;
+      }
+      .booking-form-w3layouts input[type="submit"],
+      .booking-form-w3layouts input[type="reset"] {
+        font-size: 1em;
+      }
+      .booking-form-w3layouts textarea {
+        height: 60px;
+      }
+      .radio-section {
+        margin: 1em 0 .7em;
+      }
+    }
+
+    @media (max-width: 414px) {
+      .booking-form-w3layouts {
+        width: 90%;
+      }
+      .booking-form-w3layouts {
+        width: 90%;
+        padding: 1.5em 1.7em;
+      }
+    }
+
+    @media (max-width: 384px) {
+      .booking-form-w3layouts input[type="submit"],
+      .booking-form-w3layouts input[type="reset"] {
+        float: none;
+      }
+      .booking-form-w3layouts input[type="submit"] {
+        margin-right: 0em;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .booking-form-w3layouts {
+        width: 93%;
+        padding: 1.3em 1.5em;
+      }
+      h2.sub-heading-agileits,
+      h3.sub-heading-agileits {
+        font-size: 18px;
+        letter-spacing: 1.4px;
+        padding: 0px 12px 5px 0px;
+      }
+    }
+
+
+
+    body#block-content {
+      margin: 0;
+      font-family: Arial, serif;
+    }
+    tr:nth-child(odd) td:first-child:before {
+      background-color: #eee;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -5000px;
+      width: 10000px;
+      height: 100%;
+      z-index: -10;
+    }
+    .airport-table {
+      overflow: hidden;
+      width: 100%;
+
+    }
+    tr:hover {
+      background-color: #ffa;
+    }
+    td, th {
+      position: relative;
+      font-size: 14px;
+      line-height: 30px;
+    }
+    td:hover::after,
+    th:hover::after {
+      content: "";
+      position: absolute;
+      background-color: #ffa;
+      left: 0;
+      top: -5000px;
+      height: 10000px;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .th-inner {
+      position: fixed;
+      top: 36px;
+      line-height: 30px;
+      text-align: left;
+      width: 100%;
+      background-color: white;
+      z-index: 1;
+    }
+    .hidden-header .th-inner {
+      position: static;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    .airport-table img {
+      margin-right: 10px;
+      width: 70px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 1030px) {
+      .note {
+        display: none;
+      }
+    }
+    @media (max-width: 940px) {
+      .airline-name {
+        display: none;
+      }
+    }
+    @media (max-width: 880px) {
+      .aircraft {
+        display: none;
+      }
+    }
+    @media (max-width: 720px) {
+      .airport {
+        display: none;
+      }
+    }
+    @media (max-width: 690px) {
+      .airline {
+        display: none;
+      }
+    }
+    #popup,
+    #popup2,
+    #popup3,
+    #popup4,
+    #popup5 {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      margin-top: -200px;
+    }
+    #popup:target,
+    #popup2:target,
+    #popup3:target,
+    #popup4:target,
+    #popup5:target {
+      visibility: visible;
+      opacity: 1;
+      background-color: rgba(0,0,0, 0.8);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      z-index: 99999999999;
+      -webkit-transition: all 1s;
+      -moz-transition: all 1s;
+      transition: all 1s;
+    }
+    a.href {
+      color: #000;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .popup-container {
+      position: relative;
+      margin: 7% auto;
+      padding: 30px 50px;
+      background-color: #fff;
+      color: #000;
+      border-radius: 3px;
+      width: 370px;
+      height: 210px;
+    }
+    .popup-container img {
+      margin: 8px 0;
+    }
+    .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: red;
+      text-decoration: none;
+    }
+    .height-fix {
+      height: 36px;
+      z-index: -1;
+    }
+    .filter-label[for="out"],
+    #out {
+      top: 25px;
+    }
+    .filter-label {
+      /*width: 100%;*/
+      /*position: fixed;*/
+      /*background-color: white;*/
+      /*z-index: 1;*/
+      /*top: 0;*/
+      /*height: 20px;*/
+      /*display: block;*/
+      /*margin-left: auto;*/
+      /*margin-right: auto;*/
+    }
+    .filter {
+      /*position: fixed;*/
+      /*top: 0;*/
+      /*z-index: 1;*/
+      /*left: 70px;*/
+    }
+
+    .airport-table .in ,
+    .airport-table .out {
+      display: none;
+    }
+    .filter#in:checked ~ .airport-table .in,
+    .filter#out:checked ~ .airport-table .out {
+      display: table-row
+    }
+  </style>
+
+</head>
+<body>
+<div id="block-body">
+  <header>
+
+    <!--     разметка для логотипа-->
+
+    <div class="logo">
+      <a href="/home">
+        <span class="use">AIR</span>-<span class="web">PORT</span>.by
+      </a>
+      <!--            <p>Разработка- это просто</p>-->
+    </div>
+
+    <!--     разметка для нашего меню-->
+
+    <div class="top-menu">
+      <ul>
+        <li><a class="clickMenu" th:href="@{/flight/search}">Поиск рейса</a></li>
+        <li><a th:href="@{/flight?sort=2}">Табло рейсов</a></li>
+        <li><a th:href="@{/booking}">Бронирование</a></li>
+        <li><a th:href="@{/info}">Информация</a></li>
+      </ul>
+    </div>
+
+    <!--     блок с авторизацией-->
+    <div class="block-top-auth">
+      <div sec:authorize="!isAuthenticated()" >
+        <p><a  th:href="@{/user/login}">Вход</a></p>
+        <p><a th:href="@{/user/registration}">Регистрация</a></p>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <p><a th:href="@{/user/login}">Мой аккаунт</a></p>
+        <p><a th:href="@{/user/logout}" >Выход</a></p>
+      </div>
+    </div>
+
+
+  </header>
+
+</div>
+
+<main class="cd__main">
+  <div class="booking-form-w3layouts">
+    <!-- Form starts here -->
+    <form th:action="@{/flight}" th:method="post">
+      <h2 class="sub-heading-agileits">Поиск рейса</h2>
+      <div class="main-flex-w3ls-sectns">
+        <div class="field-agileinfo-spc form-w3-agile-text1">
+          <select class="form-control" name="fromcity">
+            <option>Город отправления</option>
+            <option id ="fromcity" th:each="flight: ${flights}" th:value="${flight.getFromcity()}" th:text="${flight.getFromcity()}">Город отправления</option>
+          </select>
+        </div>
+        <div class="field-agileinfo-spc form-w3-agile-text2">
+          <select class="form-control" name= "tocity">
+            <option>Город прибытия</option>
+            <option id = "tocity" th:each="flight: ${flights}" th:value="${flight.getTocity()}" th:text="${flight.getTocity()}">Город прибытия</option>
+          </select>
+        </div>
+      </div>
+      <div class="main-flex-w3ls-sectns">
+<!--        <div class="field-agileinfo-spc form-w3-agile-text1" >-->
+<!--          <select class="form-control" id="nameairline" name="airline">-->
+<!--            <option>Авиакомпания</option>-->
+<!--            <option id= "airline" th:each="airline: ${airlines}" th:value="${airline.getName()}" th:text="${airline.getName()}">Авиакомпания</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <div class="field-agileinfo-spc form-w3-agile-text2">-->
+<!--          <select class="form-control" >-->
+<!--            <option>Preferred Seating</option>-->
+<!--            <option value="Window">Window</option>-->
+<!--            <option value="Aisle">Aisle</option>-->
+<!--            <option value="Special">Special (Request note below)</option>-->
+<!--          </select>-->
+<!--        </div>-->
+      </div>
+      <div class="main-flex-w3ls-sectns">
+        <div class="field-agileinfo-spc form-w3-agile-text1">
+          <input id="datepicker" name="date" type="text"   placeholder="Дата"   class="hasDatepicker">
+        </div>
+        <div class="field-agileinfo-spc form-w3-agile-text2">
+            <input type="text" id="timepicker" name="time"  class="timepicker form-control hasWickedpicker" placeholder="Время" >
+        </div>
+      </div>
+      <!--      <div class="radio-section">-->
+      <!--        <h6>Select your Fare</h6>-->
+      <!--        <ul class="radio-buttons-w3-agileits">-->
+      <!--          <li>-->
+      <!--            <input type="radio" id="a-option" name="selector1">-->
+      <!--            <label for="a-option">One Way</label>-->
+      <!--            <div class="check"></div>-->
+      <!--          </li>-->
+      <!--          <li>-->
+      <!--            <input type="radio" id="b-option" name="selector1">-->
+      <!--            <label for="b-option">Round-Trip</label>-->
+      <!--            <div class="check">-->
+      <!--              <div class="inside"></div>-->
+      <!--            </div>-->
+      <!--          </li>-->
+      <!--        </ul>-->
+      <!--        <div class="clear"></div>-->
+      <!--      </div>-->
+<!--            <div class="main-flex-w3ls-sectns">-->
+<!--              <div class="field-agileinfo-spc form-w3-agile-text1">-->
+<!--                <input id="datepicker1" name="Text" type="text" placeholder="Return Date" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="" class="hasDatepicker">-->
+<!--              </div>-->
+<!--              <div class="field-agileinfo-spc form-w3-agile-text2">-->
+<!--                <input type="text" id="timepicker1" name="Time" class="timepicker form-control hasWickedpicker" placeholder="Return Time" value="" onkeypress="return false;">-->
+<!--              </div>-->
+<!--            </div>-->
+      <!--      <div class="field-agileinfo-spc form-w3-agile-text">-->
+      <!--        <textarea name="Message" placeholder="Any Message..."></textarea>-->
+      <!--      </div>-->
+      <!--      <h3 class="sub-heading-agileits">Personal Details</h3>-->
+      <!--      <div class="main-flex-w3ls-sectns">-->
+      <!--        <div class="field-agileinfo-spc form-w3-agile-text1">-->
+      <!--          <input type="text" name="Name" placeholder="Full Name" required="">-->
+      <!--        </div>-->
+      <!--        <div class="field-agileinfo-spc form-w3-agile-text2">-->
+      <!--          <input type="text" name="Phone no" placeholder="Phone Number" required="">-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <div class="field-agileinfo-spc form-w3-agile-text">-->
+      <!--        <input type="email" name="Email" placeholder="Email" required="">-->
+      <!--      </div>-->
+      <div class="clear"></div>
+      <input type="submit" value="Поиск">
+      <input type="reset" value="Очистить форму">
+      <div class="clear"></div>
+    </form>
+    <!--// Form starts here -->
+
+  </div>
+</main>
+
+<div id="block-content">
+<div class="container" >
+  <div class="height-fix">
+  </div>
+  <!--      <label class="filter-label" for="in">Прилет:</label>-->
+  <!--      <input type="checkbox" class="filter" id="in" checked>-->
+  <!--      <label class="filter-label" for="out">Вылет:</label>-->
+  <!--      <input type="checkbox" class="filter" id="out" checked>-->
+  <table class="airport-table" cellspacing="0" >
+    <thead class="airport-table__head" id="table-head">
+    <!--            <tr>-->
+    <!--                <th>-->
+    <!--                    <div class="th-inner">Тип рейса</div>-->
+    <!--                </th>-->
+    <!--                <th class="airline">-->
+    <!--                    <div class="th-inner">Авиакомпания</div>-->
+    <!--                </th>-->
+    <!--                <th>-->
+    <!--                    <div class="th-inner">Номер рейса</div>-->
+    <!--                </th>-->
+    <!--                <th class="aircraft">-->
+    <!--                    <div class="th-inner">Тип воздушного судна</div>-->
+    <!--                </th>-->
+    <!--                <th>-->
+    <!--                    <div class="th-inner">Место назначения</div>-->
+    <!--                </th>-->
+    <!--                <th>-->
+    <!--                    <div class="th-inner">Время по расписанию</div>-->
+    <!--                </th>-->
+    <!--                <th>-->
+    <!--                    <div class="th-inner">Статус рейса</div>-->
+    <!--                </th>-->
+    <!--                <th class="note">-->
+    <!--                    <div class="th-inner">Примечание</div>-->
+    <!--                </th>-->
+    <!--            </tr>-->
+    <tr class="hidden-header">
+      <th>
+        <div class="th-inner">Тип рейса</div>
+      </th>
+      <th class="airline">
+        <div class="th-inner">Авиакомпания</div>
+      </th>
+      <th>
+        <div class="th-inner">Номер рейса</div>
+      </th>
+      <!--                <th class="aircraft">-->
+      <!--                    <div class="th-inner">Тип воздушного судна</div>-->
+      <!--                </th>-->
+      <th>
+        <div class="th-inner">Откуда</div>
+      </th>
+      <th>
+        <div class="th-inner">Куда</div>
+      </th>
+      <th>
+        <div class="th-inner">Время по расписанию</div>
+      </th>
+      <th>
+        <div class="th-inner">Статус рейса</div>
+      </th>
+      <!--          <th sec:authorize="hasRole('ADMIN')">-->
+      <!--            <div class="th-inner">Изменение</div>-->
+      <!--          </th>-->
+      <!--          <th sec:authorize="hasRole('ADMIN')">-->
+      <!--            <div class="th-inner">Удаление</div>-->
+      <!--          </th>-->
+    </tr>
+    </thead>
+    <tbody class="airport-table__body" th:each="race : ${races}">
+    <tr>
+      <td><div th:switch="${race.getType()}">
+        <a th:case="in" href="#popup" class="href" th:text="Прилет"></a>
+        <a th:case="out" href="#popup" class="href" th:text="Вылет"></a>
+      </div> </td>
+      <td class="airline" th:each="airline : ${airlinesdao.showById(race.getId_f())}">
+        <a   href="#popup" class="href" th:text="${airline.getName()}"><span class="airline-name">Аэрофлот</span></a>
+        <!--                    <a th:if="${airline.getName() == '' }"  href="#popup" class="href" >-&#45;&#45;</a>-->
+      </td>
+      <td><a href="#popup" class="href" th:text="${race.getNumber()}"></a></td>
+      <!--                <td class="aircraft"><a href="#popup" class="href" th:text="${}">А-330-300</a></td>-->
+      <td><a href="#popup" class="href" th:text="${race.getFromcity()}"></a></td>
+      <td><a href="#popup" class="href" th:text="${race.getTocity()}"></a></td>
+      <td><a href="#popup" class="href" th:text="${race.getTime() + ' ' + race.getDate()}"></a></td>
+      <td><a href="#popup" class="href" th:text="${race.getStatus()}"></a></td>
+      <!--          <td sec:authorize="hasRole('ADMIN')">-->
+      <!--            &lt;!&ndash;                    <input type="submit" value="Изменить" th:href="@{/flight/{id}/edit (id=${flight.getId_f()}) }"/>&ndash;&gt;-->
+      <!--            <a th:href="@{/flight/{id}/edit (id=${flight.getId_f()}) }" > Изменить</a>-->
+      <!--          </td>-->
+      <!--          <td sec:authorize="hasRole('ADMIN')">-->
+      <!--            <form th:method="DELETE" th:action="@{/flight/delete/{id} (id=${flight.getId_f()})}">-->
+      <!--              <input type="submit" value="Удалить"/>-->
+      <!--            </form>-->
+      <!--          </td>-->
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<!-- Script JS -->
+<!--<script src="./js/script.js"></script>-->
+<!--$%analytics%$-->
+</body>
+</html>

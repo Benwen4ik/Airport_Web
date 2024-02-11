@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration users</title>
+    <link rel="stylesheet"  type="text/css" href="/static/css/style1.css">
+
+</head>
+<body>
+<h2>Login Form</h2>
+<!--<div>-->
+<!--<script src="../../js/header.js">-->
+<!--</script> </div>-->
+<form th:method="post"  th:action="@{/user}" th:object="${user}" >
+
+    <div class="container">
+        <label for="login"><b>Login</b></label>
+        <input type="text" th:field="*{login}" id="Login" placeholder="Enter login"/>
+<!--      <p th:each="error: ${#fields.errors('login')}" th:text="${error}">Validation error</p>-->
+<!--        <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Name Error</div>-->
+
+        <label for="password"><b>Password</b></label>
+        <input type="text" th:field="*{password}" id="password" placeholder="Enter password"/>
+
+<!--        <label for="confirmpassword"><b>Retry Password</b></label>-->
+<!--        <input type="text" th:field="*{password}" id="confirmpassword" placeholder="Enter password again"/>-->
+
+        <label for="name"><b>Name</b></label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Enter name"/>
+
+        <label for="surname"><b>Surname</b></label>
+        <input type="text" th:field="*{surname}" id="surname" placeholder="Enter surname"/>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" th:field="*{email}" id="email" placeholder="Enter email"/>
+
+        <button type="submit">Registration</button>
+        <label>
+<!--            <input type="checkbox" checked="checked" name="remember"> Remember me-->
+        </label>
+    </div>
+
+<!--    <div class="container" style="background-color:#f1f1f1">-->
+<!--        <button type="button" class="cancelbtn">Cancel</button>-->
+<!--        <span class="psw">Forgot <a href="#">password?</a></span>-->
+<!--    </div>-->
+</form>
+</body>
+</html>

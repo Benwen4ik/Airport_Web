@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style >
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: powderblue;
+      /*background-image: url("../img/white-needle.png");*/
+    }
+    #block-body {
+      width: 1035px;
+      margin: 5px auto;
+      height: auto;
+    }
+    header {
+      width: 1035px;
+      height: 80px;
+      background-color: black;
+    }
+    #block-content {
+      margin-left: auto;
+      margin-right: auto;
+      width: 1035px;
+      height: auto;
+      min-height: 500px;
+    }
+    .logo {
+      width: 200px;
+      float: left;
+      height: 80px;
+    }
+    .logo a {
+      display: block;
+      margin-left: 15px;
+      margin-top: 10px;
+      font-family: "Exo2-Bold", sans-serif;
+      font-size: 28px;
+      color:  #b2aeb2;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .use {
+      color: #aa064b;
+
+    }
+    .web {
+      color: #429595;
+    }
+    .logo p {
+      margin-left: 20px;
+      margin-top: 2px;
+      margin-bottom: 5px;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 13px;
+      color: white;
+    }
+    .top-menu {
+      width: 685px;
+      height: 80px;
+      float: left;
+    }
+    .top-menu ul li {
+      list-style: none;
+      float: left;
+      text-align: center;
+    }
+    .top-menu ul li a {
+      display: block;
+      width: 171px;
+      text-decoration: none;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 17px;
+      color: white;
+      height: 55px;
+      padding-top: 25px;
+      cursor: pointer;
+    }
+    .top-menu ul li a:hover {
+      transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -ms-transition:all 0.5s ease;
+      -moz-transition:all 0.5s ease;
+      background: #00ADE4;
+    }
+    .block-top-auth {
+      width: 100px;
+      float: left;
+      margin-left: 40px;
+      height: 80px;
+    }
+    .block-top-auth p {
+      margin-top: 12px;
+      text-align: center;
+      margin-bottom: 8px;
+
+    }
+    .block-top-auth a {
+      text-decoration: none;
+      color: white;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 15px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .block-top-auth a:hover {
+      transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -ms-transition:all 0.5s ease;
+      -moz-transition:all 0.5s ease;
+      color: #00ADE4;
+    }
+
+    h1 { color: #1c1c1c; font-family: ‘Raleway’,sans-serif; font-size: 62px; font-weight: 800; line-height: 72px; margin: 0 0 24px; text-align: center; text-transform: uppercase; }
+
+    h2 { color: #1c1c1c; font-family: ‘Raleway’,sans-serif; font-size: 30px; font-weight: 800; line-height: 36px; margin: 0 0 24px; text-align: center; }
+
+    p { color: #4c4a37; font-family: ‘Source Sans Pro’, sans-serif; font-size: 18px; line-height: 32px; margin: 0 0 24px; }
+
+    a { color: #c8c8c8; text-decoration: underline; }
+
+    a:hover { color: #1c1c1c; text-decoration: underline; }
+
+    #info ul li {
+      color: #4c4a37; font-family: ‘Source Sans Pro’, sans-serif; font-size: 18px;
+      list-style: none;
+      position: relative;
+      padding: 3px 0 2px 25px;
+    }
+
+    ul li::before {
+      content: '*';
+      position: absolute;
+      top: 6px;
+      left: 0;
+    }
+
+  </style>
+</head>
+<body>
+<div id="block-body">
+  <header>
+
+    <!--     разметка для логотипа-->
+
+    <div class="logo">
+      <a href="/home">
+        <span class="use">AIR</span>-<span class="web">PORT</span>.by
+      </a>
+      <!--            <p>Разработка- это просто</p>-->
+    </div>
+
+    <!--     разметка для нашего меню-->
+
+    <div class="top-menu">
+      <ul>
+        <li><a class="clickMenu" th:href="@{/flight/search}">Поиск рейса</a></li>
+        <li><a th:href="@{/flight?sort=2}">Табло рейсов</a></li>
+        <li><a th:href="@{/booking}">Бронирование</a></li>
+        <li><a th:href="@{/info}">Информация</a></li>
+      </ul>
+    </div>
+
+    <!--     блок с авторизацией-->
+    <div class="block-top-auth">
+      <div sec:authorize="!isAuthenticated()" >
+        <p><a  th:href="@{/user/login}">Вход</a></p>
+        <p><a th:href="@{/user/registration}">Регистрация</a></p>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <p><a th:href="@{/user/login}">Мой аккаунт</a></p>
+        <p><a th:href="@{/user/logout}" >Выход</a></p>
+      </div>
+    </div>
+
+
+  </header>
+
+</div>
+
+<div id="block-content"  >
+  <h1>Информация</h1>
+  <h2>Регистрация на рейс</h2>
+  <p>
+    Для совершения перелета требуется иметь при себе следующие документы:</p>
+  <div id="info">
+  <ul>
+    <li >
+      действующий паспорт (не более 10 лет с даты выдачи, если страна назначения предъявляет такие требования к данному документу):
+      <ul>
+        <li>
+          национальный;</li>
+        <li>
+          дипломатический;</li>
+        <li>
+          служебный;</li>
+        <li>
+          специальный;</li>
+        <li>
+          официальный;</li>
+      </ul>
+      <div>
+        или</div>
+    </li>
+    <li>
+      другой документ, удостоверяющий личность пассажира в соответствии с действующим законодательством страны вылета, назначения, транзита:
+      <ul>
+        <li>
+          проездной документ беженца/ лица без гражданства;</li>
+        <li>
+          проездной документ Европейского союза;</li>
+        <li>
+          идентификационная карта;</li>
+        <li>
+          удостоверение личности/паспорт моряка;</li>
+        <li>
+          удостоверение пилота;</li>
+        <li>
+          выписка из судовой роли;</li>
+        <li>
+          гарантийное письмо;</li>
+        <li>
+          полетное задание;</li>
+        <li>
+          свидетельство о рождении (если является проездным документом, например, РФ);</li>
+        <li>
+          идентификационная карточка военнослужащего;</li>
+        <li>
+          командировочное удостоверение;</li>
+      </ul>
+    </li>
+    <li>
+      действительную визу (если требуется в соответствии с законодательством страны назначения, транзита):
+      <ul>
+        <li>
+          виза (вклейка);</li>
+        <li>
+          мастичный штамп-виза;</li>
+        <li>
+          электронная виза (только в распечатанном виде, в телефоне не допускается);</li>
+        <li>
+          вид на жительство;</li>
+        <li>
+          продление вида на жительство;</li>
+        <li>
+          разрешение на работу;</li>
+        <li>
+          разрешение на учебу;</li>
+        <li>
+          гарантийное письмо;</li>
+        <li>
+          карточка аккредитации;</li>
+      </ul>
+    </li>
+    <li>
+      для детей до 18 лет, если:
+      <ul>
+        <li>
+          путешествует один без сопровождения взрослого совершеннолетнего лица - нотариально заверенное согласие от родителей (опекунов);</li>
+        <li>
+          путешествует с одним из родителей - нотариальное разрешение от второго родителя не требуется;</li>
+        <li>
+          путешествует с бабушкой или дедушкой - нотариально заверенное согласие законных представителей (родителей, опекунов);</li>
+      </ul>
+    </li>
+    <li>
+      медицинская страховка (если требуется в соответствии с законодательством страны назначения, транзита), медицинский документ (сертификат по форме, установленной страной назначения, транзита) с отрицательным результатом ПЦР-теста (SARS-Cov-2) или с результатом теста на антиген или на антитела, другие медицинские документы (если требуются в связи с путешествием);</li>
+    <li>
+      авиабилет (если оформлен на бумажном носителе) или маршрут-квитанцию (для Вашего удобства).
+      <p>
+        Пассажиры могут зарегистрироваться на рейс на стойках регистрации в аэропорту или самостоятельно с использованием Интернет ресурсов (&laquo;онлайн&raquo;) или в аэропорту через киоски самостоятельной регистрации (KUSS).</p> </li> </ul>
+  </div>
+  </div>
+</body>
+</html>

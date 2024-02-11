@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--<link th:href="@{header_style.css}"  rel="stylesheet">-->
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    /*@font-face {*/
+    /*  font-family: "Exo2-Medium";*/
+    /*  src: url("../fonts/Exo2-Medium.ttf");*/
+    /*}*/
+    /*@font-face {*/
+    /*  font-family: "Exo2-MediumItalic";*/
+    /*  src: url("../fonts/Exo2-MediumItalic.ttf");*/
+    /*}*/
+    /*@font-face {*/
+    /*  font-family: "Exo2-Bold";*/
+    /*  src: url("../fonts/Exo2-Bold.ttf");*/
+    /*}*/
+    /*@font-face {*/
+    /*  font-family: "Exo2-BoldItalic";*/
+    /*  src: url("../fonts/Exo2-BoldItalic.ttf");*/
+    /*}*/
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: powderblue;
+      /*background-image: url("../img/white-needle.png");*/
+    }
+    #block-body {
+      width: 1035px;
+      margin: 5px auto;
+      height: auto;
+    }
+    header {
+      width: 1035px;
+      height: 80px;
+      background-color: black;
+    }
+    #block-content {
+      width: 1035px;
+      height: auto;
+      min-height: 500px;
+    }
+    .logo {
+      width: 200px;
+      float: left;
+      height: 80px;
+    }
+    .logo a {
+      display: block;
+      margin-left: 15px;
+      margin-top: 10px;
+      font-family: "Exo2-Bold", sans-serif;
+      font-size: 28px;
+      color:  #b2aeb2;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .use {
+      color: #aa064b;
+
+    }
+    .web {
+      color: #429595;
+    }
+    .logo p {
+      margin-left: 20px;
+      margin-top: 2px;
+      margin-bottom: 5px;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 13px;
+      color: white;
+    }
+    .top-menu {
+      width: 685px;
+      height: 80px;
+      float: left;
+    }
+    .top-menu ul li {
+      list-style: none;
+      float: left;
+      text-align: center;
+    }
+    .top-menu ul li a {
+      display: block;
+      width: 171px;
+      text-decoration: none;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 17px;
+      color: white;
+      height: 55px;
+      padding-top: 25px;
+      cursor: pointer;
+    }
+    .top-menu ul li a:hover {
+      transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -ms-transition:all 0.5s ease;
+      -moz-transition:all 0.5s ease;
+      background: #00ADE4;
+    }
+    .block-top-auth {
+      width: 100px;
+      float: left;
+      margin-left: 40px;
+      height: 80px;
+    }
+    .block-top-auth p {
+      margin-top: 12px;
+      text-align: center;
+      margin-bottom: 8px;
+
+    }
+    .block-top-auth a {
+      text-decoration: none;
+      color: white;
+      font-family:  "Exo2-Medium", sans-serif;
+      font-size: 15px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .block-top-auth a:hover {
+      transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -ms-transition:all 0.5s ease;
+      -moz-transition:all 0.5s ease;
+      color: #00ADE4;
+    }
+
+
+
+    input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+    div#block-content {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+<div id="block-body">
+  <header>
+
+    <!--     разметка для логотипа-->
+
+    <div class="logo">
+      <a href="/home">
+        <span class="use">AIR</span>-<span class="web">PORT</span>.by
+      </a>
+      <!--            <p>Разработка- это просто</p>-->
+    </div>
+
+    <!--     разметка для нашего меню-->
+
+    <div class="top-menu">
+      <ul>
+        <li><a class="clickMenu" th:href="@{/flight/search}">Поиск рейса</a></li>
+        <li><a th:href="@{/flight?sort=2}">Табло рейсов</a></li>
+        <li><a th:href="@{/booking}">Бронирование</a></li>
+        <li><a th:href="@{/info}">Информация</a></li>
+      </ul>
+    </div>
+
+    <!--     блок с авторизацией-->
+    <div class="block-top-auth">
+      <div sec:authorize="!isAuthenticated()" >
+        <p><a  th:href="@{/user/login}">Вход</a></p>
+        <p><a th:href="@{/user/registration}">Регистрация</a></p>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <p><a th:href="@{/user/login}">Мой аккаунт</a></p>
+        <p><a th:href="@{/user/logout}" >Выход</a></p>
+      </div>
+    </div>
+
+
+  </header>
+
+</div>
+
+<div id="block-content">
+  <div >
+    <a th:text="'Бронирование на рейс из '+ ${flight.getFromcity()} + '  в ' + ${flight.getTocity() } + '  с номером: '+ ${flight.getNumber()}  ">text</a>
+  </div>
+
+  <div>
+    <form th:method="post" th:action="@{/ticket/{id}(id=${flight.getId_f()})}">
+      <label for="country">Место</label>
+      <select id="country" name="type">
+        <option value="window">Возле окна</option>
+        <option value="aisle">Возле прохода</option>
+        <option value="special">Специальное</option>
+      </select>
+      <br/>
+      <label for="count">Введите количество мест: </label>
+      <input type="number" required name ="count" id="count" placeholder="Введите количество"/>
+      <br/>
+<!--      <div name ="idf"  th:value="${flight.getId_f()}"></div>-->
+      <input type="submit" value="Забронировать">
+    </form>
+  </div>
+
+</div>
+
+
+</body>
+</html>
